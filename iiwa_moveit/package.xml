@@ -22,7 +22,6 @@
   <depend>position_controllers</depend>
   <depend>velocity_controllers</depend>
   <depend>effort_controllers</depend>
-  <depend>gazebo_ros_control</depend>
   <depend>moveit_ros_planning_interface</depend>
   <depend>moveit_ros_warehouse</depend>
   <depend>moveit_ros_visualization</depend>
