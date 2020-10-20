@@ -53,7 +53,7 @@
 #include <sstream>
 #include <vector>
 
-constexpr int DEFAULT_CONTROL_FREQUENCY = 1000;  // Hz
+constexpr int DEFAULT_CONTROL_FREQUENCY = 10;  // Hz
 constexpr int IIWA_JOINTS = 7;
 
 namespace iiwa_hw {
