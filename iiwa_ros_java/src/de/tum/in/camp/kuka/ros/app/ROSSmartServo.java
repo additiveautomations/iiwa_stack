@@ -444,14 +444,6 @@ public class ROSSmartServo extends ROSBaseApplication {
         subscriber.currentCommandType = null;
 
         switch (copy) {
-          case SMART_SERVO_CARTESIAN_POSE: {
-            moveToCartesianPose(subscriber.getCartesianPose(), null);
-            break;
-          }
-          case SMART_SERVO_CARTESIAN_POSE_LIN: {
-            moveToCartesianPoseLin(subscriber.getCartesianPoseLin(), null);
-            break;
-          }
           case SMART_SERVO_CARTESIAN_VELOCITY: {
             moveByCartesianVelocity(subscriber.getCartesianVelocity());
             break;
@@ -567,28 +559,6 @@ public class ROSSmartServo extends ROSBaseApplication {
   protected void moveToJointPosition(iiwa_msgs.JointPosition commandPosition) {
     activateMotionMode(CommandType.SMART_SERVO_JOINT_POSITION);
     motions.jointPositionMotion(motion, commandPosition);
-  }
-
-  protected void moveToCartesianPose(PoseStamped commandPosition, RedundancyInformation redundancy) {
-    activateMotionMode(CommandType.SMART_SERVO_CARTESIAN_POSE);
-    commandPosition = subscriber.transformPose(commandPosition, robotBaseFrameID);
-    if (commandPosition != null) {
-      motions.cartesianPositionMotion(motion, commandPosition, redundancy);
-    }
-    else {
-      Logger.warn("Invalid motion target pose");
-    }
-  }
-
-  protected void moveToCartesianPoseLin(PoseStamped commandPosition, RedundancyInformation redundancy) {
-    activateMotionMode(CommandType.SMART_SERVO_CARTESIAN_POSE_LIN);
-    commandPosition = subscriber.transformPose(commandPosition, robotBaseFrameID);
-    if (commandPosition != null) {
-      motions.cartesianPositionLinMotion(linearMotion, commandPosition, redundancy);
-    }
-    else {
-      Logger.warn("Invalid motion target pose");
-    }
   }
 
   protected void movePointToPointJointPosition(JointPosition commandPosition) {
