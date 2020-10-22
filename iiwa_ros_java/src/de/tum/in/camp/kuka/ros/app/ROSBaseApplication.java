@@ -288,6 +288,7 @@ public abstract class ROSBaseApplication extends RoboticsAPIApplication {
 
     String endpointFrameFromConfig = configuration.getEndpointFrame();
     if (endpointFrameFromConfig.isEmpty() || endpointFrameFromConfig.equals(configuration.getToolFrameID())) {
+      Logger.info("Setting endpoint frame " + configuration.getToolFrameID());
       endpointFrame = toolFrame;
     }
     else {
