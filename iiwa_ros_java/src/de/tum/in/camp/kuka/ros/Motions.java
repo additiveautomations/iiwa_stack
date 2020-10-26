@@ -35,7 +35,6 @@ import iiwa_msgs.SplineSegment;
 import geometry_msgs.PoseStamped;
 
 import com.kuka.connectivity.motionModel.smartServo.SmartServo;
-import com.kuka.connectivity.motionModel.smartServoLIN.SmartServoLIN;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy;
@@ -90,41 +89,6 @@ public class Motions {
 
   public void setEnpointFrame(ObjectFrame endpointFrame) {
     this.endPointFrame = endpointFrame;
-  }
-
-  /**
-   * Start SmartServo motion to cartesian target pose.
-   * 
-   * @param motion
-   * @param commandPosition
-   * @param status : Redundancy information. Set to -1 if not needed
-   */
-  public void cartesianPositionMotion(SmartServo motion, geometry_msgs.PoseStamped commandPosition, RedundancyInformation redundancy) {
-    if (commandPosition != null) {
-      Frame destinationFrame = Conversions.rosPoseToKukaFrame(robot.getRootFrame(), commandPosition.getPose());
-      if (redundancy != null && redundancy.getStatus() >= 0 && redundancy.getTurn() >= 0) {
-        // You can get this info from the robot Cartesian Position (SmartPad).
-        IRedundancyCollection redundantData = new LBRE1Redundancy(redundancy.getE1(), redundancy.getStatus(), redundancy.getTurn());
-        destinationFrame.setRedundancyInformation(robot, redundantData);
-      }
-      if (robot.isReadyToMove()) {
-        motion.getRuntime().setDestination(destinationFrame);
-      }
-    }
-  }
-
-  public void cartesianPositionLinMotion(SmartServoLIN linearMotion, PoseStamped commandPosition, RedundancyInformation redundancy) {
-    if (commandPosition != null) {
-      Frame destinationFrame = Conversions.rosPoseToKukaFrame(robot.getRootFrame(), commandPosition.getPose());
-      if (redundancy != null && redundancy.getStatus() >= 0 && redundancy.getTurn() >= 0) {
-        // You can get this info from the robot Cartesian Position (SmartPad).
-        IRedundancyCollection redundantData = new LBRE1Redundancy(redundancy.getE1(), redundancy.getStatus(), redundancy.getTurn());
-        destinationFrame.setRedundancyInformation(robot, redundantData);
-      }
-      if (robot.isReadyToMove()) {
-        linearMotion.getRuntime().setDestination(destinationFrame);
-      }
-    }
   }
 
   public void pointToPointCartesianMotion(IMotionControlMode motion, PoseStamped commandPosition, RedundancyInformation redundancy) {
