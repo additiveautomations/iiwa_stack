@@ -337,11 +337,8 @@ public class ROSSmartServo extends ROSBaseApplication {
           @Override
           public void build(SetEndpointFrameRequest req, SetEndpointFrameResponse res) throws ServiceException {
             try {
-              if (req.getFrameId().isEmpty()) {
+              if (req.getFrameId().isEmpty() || req.getFrameId().equals(configuration.getToolFrameID())) {
                 endpointFrame = toolFrame;
-              }
-              else if (req.getFrameId().equals(configuration.getRobotName() + toolFrameIDSuffix)) {
-                endpointFrame = robot.getFlange();
               }
               else {
                 endpointFrame = tool.getFrame(req.getFrameId());

@@ -85,8 +85,6 @@ public abstract class ROSBaseApplication extends RoboticsAPIApplication {
 
   protected LBR robot = null;
   protected Tool tool = null;
-  protected String toolFrameID = "";
-  protected static final String toolFrameIDSuffix = "_link_ee";
 
   protected SmartServo motion = null;
   protected SmartServoLIN linearMotion = null;
@@ -277,24 +275,21 @@ public abstract class ROSBaseApplication extends RoboticsAPIApplication {
       Logger.info("Attaching tool " + toolFromConfig);
       tool = (Tool) getApplicationData().createFromTemplate(toolFromConfig);
       tool.attachTo(robot.getFlange());
-      toolFrameID = toolFromConfig + toolFrameIDSuffix;
-      toolFrame = tool.getFrame("/" + toolFrameID);
+      toolFrame = tool.getFrame(configuration.getToolFrameID());
       if (toolFrame == null) {
         Logger.error("No tool frame");
+        System.exit(1);
       }
     }
     else {
       Logger.info("No tool attached. Using robot's flange.");
-      toolFrameID = configuration.getRobotName() + toolFrameIDSuffix;
       toolFrame = robot.getFlange();
     }
 
     String endpointFrameFromConfig = configuration.getEndpointFrame();
-    if (endpointFrameFromConfig.isEmpty()) {
+    if (endpointFrameFromConfig.isEmpty() || endpointFrameFromConfig.equals(configuration.getToolFrameID())) {
+      Logger.info("Setting endpoint frame " + configuration.getToolFrameID());
       endpointFrame = toolFrame;
-    }
-    else if (endpointFrameFromConfig.equals(configuration.getRobotName() + toolFrameIDSuffix)) {
-      endpointFrame = robot.getFlange();
     }
     else {
       try {
@@ -303,6 +298,7 @@ public abstract class ROSBaseApplication extends RoboticsAPIApplication {
       }
       catch (Exception e) {
         Logger.error("Error while setting endpoint frame to \"" + endpointFrameFromConfig + "\": " + e.getMessage());
+        System.exit(1);
       }
     }
 

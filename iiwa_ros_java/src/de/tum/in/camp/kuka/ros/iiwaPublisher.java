@@ -128,18 +128,6 @@ public class iiwaPublisher extends AbstractNodeMain {
     this.publishJointState = publishJointState;
   }
 
-  /**
-   * Returns the current name used to compose the ROS topics' names for the publishers.
-   * <p>
-   * e.g. returning "dummy" means that the topics' names will be "dummy/state/...". <br>
-   * The creation of the nodes is performed when the <i>execute</i> method from a <i>nodeMainExecutor</i> is
-   * called.
-   * 
-   * @return the current name to use for ROS topics.
-   */
-  public String getIIWAName() {
-    return robotName;
-  }
 
   /**
    * @see org.ros.node.NodeMain#getDefaultNodeName()
@@ -176,20 +164,6 @@ public class iiwaPublisher extends AbstractNodeMain {
 
     mediaFlangeOutputsPublisher = connectedNode.newPublisher(robotName + "/state/mediaFlangeOutputs", std_msgs.Int8._TYPE);
     mediaFlangeInputsPublisher = connectedNode.newPublisher(robotName + "/state/mediaFlangeInputs", std_msgs.Int8._TYPE);
-  }
-
-  /**
-   * Publishes to the respective topics all the iiwa_msgs with the values they are currently set to.
-   * <p>
-   * Only the nodes that currently have subscribers will publish the messages.<br>
-   * <b>Cartesian information published will be relative to the robot's flange</b>
-   * 
-   * @param robot : the state of this robot will be published
-   * @param motion : the dynamic of this motion will be published
-   * @throws InterruptedException
-   */
-  public void publishCurrentState() throws InterruptedException {
-    publishCurrentState(robot.getFlange());
   }
 
   /**

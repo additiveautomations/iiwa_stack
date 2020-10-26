@@ -424,6 +424,19 @@ public class Configuration extends AbstractNodeMain {
   }
 
   /**
+   * Get the frame id of the attached tool.
+   *
+   * @return the frame id String
+   */
+  public String getToolFrameID() {
+    String tool = getToolName();
+    if (tool.isEmpty()) {
+      tool = getRobotName();
+    }
+    return tool + "_link_ee";
+  }
+
+  /**
    * Configure the time provider to use accordingly to the value of of <b>ntp_with_host</b> in the
    * configuration file.
    * 
