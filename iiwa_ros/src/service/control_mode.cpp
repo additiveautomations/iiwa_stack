@@ -58,6 +58,7 @@ bool ControlModeService::callService() {
     return config_.response.success;
   }
   ROS_ERROR_STREAM("The service client was not intialized yet. Call the init function of this object first.");
+  return false;
 }
 
 void ControlModeService::initCartesianLimits(const iiwa_msgs::CartesianQuantity& max_path_deviation,
@@ -131,7 +132,7 @@ bool ControlModeService::setJointImpedanceMode(const iiwa_msgs::JointQuantity& j
 }
 
 bool ControlModeService::setJointImpedanceMode(const double joint_stiffnes, const double joint_damping) {
-  setJointImpedanceMode(conversions::jointQuantityFromFloat(joint_stiffnes),
+  return setJointImpedanceMode(conversions::jointQuantityFromFloat(joint_stiffnes),
                         conversions::jointQuantityFromFloat(joint_damping));
 }
 
@@ -150,14 +151,14 @@ bool ControlModeService::setCartesianImpedanceMode(const iiwa_msgs::CartesianQua
 bool ControlModeService::setCartesianImpedanceMode(const iiwa_msgs::CartesianQuantity& cartesian_stiffness,
                                                    const iiwa_msgs::CartesianQuantity& cartesian_damping,
                                                    const double nullspace_stiffness, const double nullspace_damping) {
-  setCartesianImpedanceMode(cartesian_stiffness, cartesian_damping, nullspace_stiffness, nullspace_damping,
+  return setCartesianImpedanceMode(cartesian_stiffness, cartesian_damping, nullspace_stiffness, nullspace_damping,
                             conversions::CartesianQuantityFromFloat(-1), conversions::CartesianQuantityFromFloat(-1),
                             conversions::CartesianQuantityFromFloat(-1), false);
 }
 
 bool ControlModeService::setCartesianImpedanceMode(const iiwa_msgs::CartesianQuantity& cartesian_stiffness,
                                                    const iiwa_msgs::CartesianQuantity& cartesian_damping) {
-  setCartesianImpedanceMode(cartesian_stiffness, cartesian_damping, -1, -1, conversions::CartesianQuantityFromFloat(-1),
+  return setCartesianImpedanceMode(cartesian_stiffness, cartesian_damping, -1, -1, conversions::CartesianQuantityFromFloat(-1),
                             conversions::CartesianQuantityFromFloat(-1), conversions::CartesianQuantityFromFloat(-1),
                             false);
 }
@@ -168,7 +169,7 @@ bool ControlModeService::setCartesianImpedanceMode(const iiwa_msgs::CartesianQua
                                                    const iiwa_msgs::CartesianQuantity& max_cartesian_velocity,
                                                    const iiwa_msgs::CartesianQuantity& max_control_force,
                                                    const bool max_control_force_stop) {
-  setCartesianImpedanceMode(cartesian_stiffness, cartesian_damping, -1, -1, max_path_deviation, max_cartesian_velocity,
+  return setCartesianImpedanceMode(cartesian_stiffness, cartesian_damping, -1, -1, max_path_deviation, max_cartesian_velocity,
                             max_control_force, max_control_force_stop);
 }
 
@@ -185,7 +186,7 @@ bool ControlModeService::setDesiredForceMode(const int cartesian_dof, const doub
 
 bool ControlModeService::setDesiredForceMode(const int cartesian_dof, const double desired_force,
                                              const double desired_stiffness) {
-  setDesiredForceMode(cartesian_dof, desired_force, desired_stiffness, conversions::CartesianQuantityFromFloat(-1),
+  return setDesiredForceMode(cartesian_dof, desired_force, desired_stiffness, conversions::CartesianQuantityFromFloat(-1),
                       conversions::CartesianQuantityFromFloat(-1), conversions::CartesianQuantityFromFloat(-1), false);
 }
 
@@ -202,7 +203,7 @@ bool ControlModeService::setSinePatternmode(const int cartesian_dof, const doubl
 
 bool ControlModeService::setSinePatternmode(const int cartesian_dof, const double frequency, const double amplitude,
                                             const double stiffness) {
-  setSinePatternmode(cartesian_dof, frequency, amplitude, stiffness, conversions::CartesianQuantityFromFloat(-1),
+  return setSinePatternmode(cartesian_dof, frequency, amplitude, stiffness, conversions::CartesianQuantityFromFloat(-1),
                      conversions::CartesianQuantityFromFloat(-1), conversions::CartesianQuantityFromFloat(-1), false);
 }
 

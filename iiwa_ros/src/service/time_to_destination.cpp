@@ -50,6 +50,7 @@ double TimeToDestinationService::getTimeToDestination() {
     }
   }
   ROS_ERROR_STREAM("The service client was not intialized yet. Call the init function of this object first.");
+  return false;
 }
 
 bool TimeToDestinationService::callService() {
