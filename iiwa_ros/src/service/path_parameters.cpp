@@ -56,6 +56,7 @@ bool PathParametersService::callService() {
     return config_.response.success;
   }
   ROS_ERROR_STREAM("The service client was not intialized yet. Call the init function of this object first.");
+  return false;
 }
 
 bool PathParametersService::setSmartServoJointSpeedLimits(const double joint_relative_velocity,
@@ -69,19 +70,19 @@ bool PathParametersService::setSmartServoJointSpeedLimits(const double joint_rel
 
 bool PathParametersService::setSmartServoJointSpeedLimits(const double joint_relative_velocity,
                                               const double joint_relative_acceleration) {
-  setSmartServoJointSpeedLimits(joint_relative_velocity, joint_relative_acceleration, -1);
+  return setSmartServoJointSpeedLimits(joint_relative_velocity, joint_relative_acceleration, -1);
 }
 
 bool PathParametersService::setJointVelocity(const double joint_relative_velocity) {
-  setSmartServoJointSpeedLimits(joint_relative_velocity, -1, -1);
+  return setSmartServoJointSpeedLimits(joint_relative_velocity, -1, -1);
 }
 
 bool PathParametersService::setJointAcceleration(const double joint_relative_acceleration) {
-  setSmartServoJointSpeedLimits(-1, joint_relative_acceleration, -1);
+  return setSmartServoJointSpeedLimits(-1, joint_relative_acceleration, -1);
 }
 
 bool PathParametersService::setOverrideJointAcceleration(const double override_joint_acceleration) {
-  setSmartServoJointSpeedLimits(-1, -1, override_joint_acceleration);
+  return setSmartServoJointSpeedLimits(-1, -1, override_joint_acceleration);
 }
 
 }  // namespace service
