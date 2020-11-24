@@ -303,7 +303,7 @@ public abstract class ROSBaseApplication extends RoboticsAPIApplication {
     }
 
     // Load speed limits from configuration.
-    SpeedLimits.init(configuration, getApplicationControl());
+    SpeedLimits.init(configuration);
 
     // TODO: check this.
     controlModeHandler = new ControlModeHandler(robot, tool, endpointFrame, publisher, actionServer, configuration);

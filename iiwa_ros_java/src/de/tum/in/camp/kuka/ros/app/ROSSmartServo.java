@@ -174,27 +174,6 @@ public class ROSSmartServo extends ROSBaseApplication {
 
     // TODO: doc
     subscriber
-        .setSpeedOverrideCallback(new ServiceResponseBuilder<iiwa_msgs.SetSpeedOverrideRequest, iiwa_msgs.SetSpeedOverrideResponse>() {
-          @Override
-          public void build(iiwa_msgs.SetSpeedOverrideRequest req, iiwa_msgs.SetSpeedOverrideResponse res)
-              throws ServiceException {
-            controlModeLock.lock();
-            try {
-              SpeedLimits.setOverrideReduction(req.getOverrideReduction(), true);
-              res.setSuccess(true);
-            }
-            catch (Exception e) {
-              res.setError(e.getClass().getName() + ": " + e.getMessage());
-              res.setSuccess(false);
-            }
-            finally {
-              controlModeLock.unlock();
-            }
-          }
-        });
-
-    // TODO: doc
-    subscriber
         .setPTPCartesianLimitsCallback(new ServiceResponseBuilder<iiwa_msgs.SetPTPCartesianSpeedLimitsRequest, iiwa_msgs.SetPTPCartesianSpeedLimitsResponse>() {
           @Override
           public void build(iiwa_msgs.SetPTPCartesianSpeedLimitsRequest req,
